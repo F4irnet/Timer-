@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ritmo de Turno">
+  <rect width="512" height="512" rx="112" fill="#151512"/>
+  <circle cx="256" cy="268" r="148" fill="#23221d" stroke="#f4c430" stroke-width="28"/>
+  <path d="M256 128v140l86 50" fill="none" stroke="#f7f2e8" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M177 82h158" fill="none" stroke="#2dd4bf" stroke-width="34" stroke-linecap="round"/>
+  <circle cx="256" cy="268" r="19" fill="#ef4444"/>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "name": "Ritmo de Turno",
+  "short_name": "Turnos",
+  "description": "Temporizador de ritmo para juegos de mesa.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#151512",
+  "theme_color": "#151512",
+  "icons": [
+    {
+      "src": "./assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
