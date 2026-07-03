@@ -354,6 +354,10 @@ h3 {
   gap: 0.75rem;
 }
 
+.alert-controls .switch-input {
+  flex: 0 0 auto;
+}
+
 .number-field {
   min-width: 6.5rem;
   height: 3.2rem;
@@ -430,23 +434,6 @@ h3 {
   accent-color: var(--phase-color);
 }
 
-.roadmap {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background: var(--surface-strong);
-  color: var(--muted);
-  box-shadow: inset 0 0 0 1px var(--line);
-}
-
-.roadmap h3 {
-  color: var(--text);
-}
-
-.roadmap p {
-  margin-bottom: 0;
-  line-height: 1.5;
-}
-
 @media (max-width: 390px) {
   .app-shell {
     padding: 0.75rem;
@@ -481,6 +468,11 @@ h3 {
   .alert-controls {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .alert-controls .number-field {
+    width: auto;
+    flex: 1;
   }
 
   .number-field {

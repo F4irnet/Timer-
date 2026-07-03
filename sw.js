@@ -1,4 +1,4 @@
-const CACHE_NAME = "ritmo-turno-v2-007";
+const CACHE_NAME = "ritmo-turno-v2-009";
 const APP_SHELL = [
   "./",
   "./index.html",

@@ -84,7 +84,7 @@
               <strong id="summaryTurn">60 s</strong>
             </div>
             <div>
-              <span>Tramo final</span>
+              <span>Cuenta regresiva</span>
               <strong id="summaryWarning">15 s</strong>
             </div>
             <div>
@@ -115,20 +115,28 @@
 
             <label class="setting-row number-row">
               <span>
-                <strong>Inicio del tramo final</strong>
+                <strong>Cuenta regresiva</strong>
                 <small id="warningSecondsHint">Hasta la mitad del turno</small>
               </span>
-              <span class="number-field">
+              <span class="alert-controls">
                 <input
-                  id="warningSecondsInput"
-                  type="number"
-                  min="1"
-                  max="59"
-                  step="1"
-                  inputmode="numeric"
-                  aria-describedby="warningSecondsHint"
+                  id="warningToggle"
+                  class="switch-input"
+                  type="checkbox"
+                  aria-label="Activar cuenta regresiva"
                 />
-                <span>s</span>
+                <span class="number-field">
+                  <input
+                    id="warningSecondsInput"
+                    type="number"
+                    min="1"
+                    max="59"
+                    step="1"
+                    inputmode="numeric"
+                    aria-describedby="warningSecondsHint"
+                  />
+                  <span>s</span>
+                </span>
               </span>
             </label>
 
@@ -152,10 +160,10 @@
             </label>
           </section>
 
-          <section class="settings-list" aria-label="Alertas puntuales">
+          <section class="settings-list" aria-label="Alertas adicionales">
             <div class="setting-row mark-row">
               <span>
-                <strong>Alerta puntual 1</strong>
+                <strong>Alerta adicional 1</strong>
                 <small id="milestoneOneHint">Segundo restante exacto</small>
               </span>
               <span class="alert-controls">
@@ -163,7 +171,7 @@
                   id="milestoneOneToggle"
                   class="switch-input"
                   type="checkbox"
-                  aria-label="Activar alerta puntual 1"
+                  aria-label="Activar alerta adicional 1"
                 />
                 <span class="number-field">
                   <input
@@ -173,7 +181,7 @@
                     max="59"
                     step="1"
                     inputmode="numeric"
-                    aria-label="Segundo de alerta puntual 1"
+                    aria-label="Segundo de alerta adicional 1"
                     aria-describedby="milestoneOneHint"
                   />
                   <span>s</span>
@@ -183,7 +191,7 @@
 
             <div class="setting-row mark-row">
               <span>
-                <strong>Alerta puntual 2</strong>
+                <strong>Alerta adicional 2</strong>
                 <small id="milestoneTwoHint">No puede repetir la primera</small>
               </span>
               <span class="alert-controls">
@@ -191,7 +199,7 @@
                   id="milestoneTwoToggle"
                   class="switch-input"
                   type="checkbox"
-                  aria-label="Activar alerta puntual 2"
+                  aria-label="Activar alerta adicional 2"
                 />
                 <span class="number-field">
                   <input
@@ -201,7 +209,7 @@
                     max="59"
                     step="1"
                     inputmode="numeric"
-                    aria-label="Segundo de alerta puntual 2"
+                    aria-label="Segundo de alerta adicional 2"
                     aria-describedby="milestoneTwoHint"
                   />
                   <span>s</span>
@@ -213,15 +221,7 @@
           <section class="settings-list" aria-label="Preferencias">
             <label class="setting-row">
               <span>
-                <strong>Alerta tramo final</strong>
-                <small>Sonido cada segundo</small>
-              </span>
-              <input id="warningToggle" class="switch-input" type="checkbox" />
-            </label>
-
-            <label class="setting-row">
-              <span>
-                <strong>Mantener pantalla despierta</strong>
+                <strong>Mantener pantalla desbloqueada</strong>
                 <small>Cuando el navegador lo permita</small>
               </span>
               <input id="wakeToggle" class="switch-input" type="checkbox" />
@@ -236,10 +236,6 @@
             </label>
           </section>
 
-          <section class="roadmap" aria-label="Próximas iteraciones">
-            <h3>Después</h3>
-            <p>Versiones futuras: sonidos, perfiles, vibración y tema.</p>
-          </section>
         </main>
       </section>
     </div>

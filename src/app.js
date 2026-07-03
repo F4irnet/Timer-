@@ -468,7 +468,7 @@ function updateWarningSeconds(shouldClamp) {
 
   state.settings.finalWarningSeconds = nextWarningSeconds;
   state.lastWarningSecond = null;
-  state.status = "Tramo final actualizado.";
+  state.status = "Cuenta regresiva actualizada.";
   saveSettings();
   syncSettingsControls();
   render();
@@ -506,8 +506,8 @@ function updateMilestoneEnabled(index) {
   alert.enabled = toggle.checked;
   state.lastMilestoneSecond = null;
   state.status = alert.enabled
-    ? `Alerta puntual ${index + 1} activada.`
-    : `Alerta puntual ${index + 1} desactivada.`;
+    ? `Alerta adicional ${index + 1} activada.`
+    : `Alerta adicional ${index + 1} desactivada.`;
   saveSettings();
   syncSettingsControls();
   render();
@@ -543,7 +543,7 @@ function updateMilestoneSeconds(index, shouldClamp) {
 
   alerts[index].secondsRemaining = distinctSeconds;
   state.lastMilestoneSecond = null;
-  state.status = `Alerta puntual ${index + 1} actualizada.`;
+  state.status = `Alerta adicional ${index + 1} actualizada.`;
   saveSettings();
   syncSettingsControls();
   render();
@@ -566,8 +566,8 @@ function syncSettingsControls() {
   dom.milestoneTwoInput.value = String(milestoneTwo.secondsRemaining);
   dom.milestoneOneInput.max = String(maxMilestoneSeconds);
   dom.milestoneTwoInput.max = String(maxMilestoneSeconds);
-  dom.milestoneOneHint.textContent = `1 a ${maxMilestoneSeconds}, distinto de alerta 2`;
-  dom.milestoneTwoHint.textContent = `1 a ${maxMilestoneSeconds}, distinto de alerta 1`;
+  dom.milestoneOneHint.textContent = `1 a ${maxMilestoneSeconds}, distinto de alerta adicional 2`;
+  dom.milestoneTwoHint.textContent = `1 a ${maxMilestoneSeconds}, distinto de alerta adicional 1`;
   dom.warningToggle.checked = state.settings.finalWarningEnabled;
   dom.wakeToggle.checked = state.settings.keepScreenAwake;
   dom.volumeSlider.value = String(Math.round(state.settings.volume * 100));
@@ -626,7 +626,7 @@ function phaseLabel(phase) {
   }
 
   if (phase === "warning") {
-    return "Tramo final";
+    return "Cuenta regresiva";
   }
 
   if (state.isRunning) {
@@ -750,6 +750,10 @@ function normalizeMilestoneAlerts(alerts, turnSeconds) {
     ...defaultAlert,
     ...(Array.isArray(alerts) ? alerts[index] : {})
   }));
+  const rawFirstSeconds = Number(sourceAlerts[0].secondsRemaining);
+  const rawSecondSeconds = Number(sourceAlerts[1].secondsRemaining);
+  const firstWasAboveLimit = rawFirstSeconds > maxMilestoneSeconds;
+  const secondWasAboveLimit = rawSecondSeconds > maxMilestoneSeconds;
   const firstSeconds = sanitizeSeconds(
     sourceAlerts[0].secondsRemaining,
     DEFAULT_MILESTONE_ALERTS[0].secondsRemaining,
@@ -766,18 +770,59 @@ function normalizeMilestoneAlerts(alerts, turnSeconds) {
     firstSeconds,
     maxMilestoneSeconds
   );
+  const normalizedSeconds = getNormalizedMilestoneSeconds(
+    firstSeconds,
+    secondSeconds,
+    firstWasAboveLimit,
+    secondWasAboveLimit,
+    maxMilestoneSeconds
+  );
 
   return [
     {
       id: DEFAULT_MILESTONE_ALERTS[0].id,
       enabled: Boolean(sourceAlerts[0].enabled),
-      secondsRemaining: firstSeconds
+      secondsRemaining: normalizedSeconds[0]
     },
     {
       id: DEFAULT_MILESTONE_ALERTS[1].id,
       enabled: Boolean(sourceAlerts[1].enabled),
-      secondsRemaining: secondSeconds
+      secondsRemaining: normalizedSeconds[1]
     }
+  ];
+}
+
+function getNormalizedMilestoneSeconds(
+  firstSeconds,
+  secondSeconds,
+  firstWasAboveLimit,
+  secondWasAboveLimit,
+  maxMilestoneSeconds
+) {
+  if (firstWasAboveLimit && !secondWasAboveLimit) {
+    return [
+      maxMilestoneSeconds,
+      getDistinctMilestoneSecond(secondSeconds, maxMilestoneSeconds, maxMilestoneSeconds)
+    ];
+  }
+
+  if (!firstWasAboveLimit && secondWasAboveLimit) {
+    return [
+      getDistinctMilestoneSecond(firstSeconds, maxMilestoneSeconds, maxMilestoneSeconds),
+      maxMilestoneSeconds
+    ];
+  }
+
+  if (firstWasAboveLimit && secondWasAboveLimit) {
+    return [
+      maxMilestoneSeconds,
+      getDistinctMilestoneSecond(maxMilestoneSeconds, maxMilestoneSeconds, maxMilestoneSeconds)
+    ];
+  }
+
+  return [
+    firstSeconds,
+    getDistinctMilestoneSecond(secondSeconds, firstSeconds, maxMilestoneSeconds)
   ];
 }
 
